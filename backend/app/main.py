@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.db import db
 from app.routers import health, user, team, equipment, request, setup
 
 app = FastAPI(title="GearGuard API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Next.js
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app.include_router(health.router, prefix="/api")
 app.include_router(user.router, prefix="/api")
